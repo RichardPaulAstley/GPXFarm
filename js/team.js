@@ -279,6 +279,11 @@ function hatchEgg(team, index) {
     }
 
   let eggData = JSON.parse(localStorage.getItem("eggData")) || {};
+    const currentDate = new Date().toDateString();
+    if (eggData.lastUpdate !== currentDate) {
+        eggData.dailyHatch = 0; // Réinitialiser le compteur quotidien
+        eggData.lastUpdate = currentDate; // Mettre à jour la date
+    }
     eggData.hatches = (eggData.hatches || 0) + 1;
     eggData.dailyHatch = (eggData.dailyHatch || 0) + 1;;
     if (egg.isShiny) {
@@ -310,13 +315,6 @@ function hatchEgg(team, index) {
     saveTeam();
     updateEggsReadyToHatch();
   }
-
-  const currentDate = new Date().toDateString();
-    if (eggData.lastUpdate !== currentDate) {
-        eggData.dailyHatch = 0; // Réinitialiser le compteur quotidien
-        eggData.lastUpdate = currentDate; // Mettre à jour la date
-    }
-	
 
   const hatchAllButton = document.getElementById("hatch-all-button");
   if (hatchAllButton) {
